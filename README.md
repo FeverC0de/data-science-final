@@ -1,3 +1,3 @@
 Group Members: Nick Twum and Ruby Ahlvin
 
-Google Colab: https://drive.google.com/file/d/12QKhSwlkUi4_ohaRlF3qG0VhwTA3ABod/view?usp=sharing
+Google Colab: https://github.com/FeverC0de/data-science-final/blob/main/data_modification.ipynb
