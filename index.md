@@ -48,7 +48,17 @@ Before removing it, it is important to consider that the part of the dataset we 
 
 In order to confirm there are no unique characteristics, we compare the mean exam score of our dataset without the rows with missing values, with the mean exam score of the extracted rows with null values. For this we can create a mask using the `df.isnull()` method and use the `df.describe()` method to obtain the summary stats of both sub datasets.
 
-Looking at our mean exam score for both datasets, the complete rows show **67.25** versus **66.78** for the rows with N/A values. We can see there is a difference of around **~0.47 points**. This is not a stark difference at all. This is true for the different metrics as well, such as attendance, sleep hours. The bar chart shows that other columns are not vastly different. We can thus go ahead and drop the rows from our data set, as it will not affect the training of our machine learning model by a noticeable amount.
+Looking at our mean exam score for both datasets, the complete rows show **67.25** versus **66.78** for the rows with N/A values. We can see there is a difference of around **~0.47 points**. This is not a stark difference at all. This is true for the different metrics as well, such as attendance, sleep hours. The bar chart shows that other columns are not vastly different. 
+
+<iframe
+    src="comparing_complete_incomplete.html"
+    width="100%"
+    height="600"
+    frameborder="0">
+</iframe>
+
+
+We can thus go ahead and drop the rows from our data set, as it will not affect the training of our machine learning model by a noticeable amount.
 
 ### One Hot Encoding
 The next step in preparing our dataset is dealing with categorical data. Given that our machine learning model cannot tell the mathematical difference between “Male” and “Female”, and given that there is no inherent order (male is not less than female and vice versa) it is necessary to use a method known as **One Hot Encoding**. One Hot Encoding allows us to represent our categorical data as numerical values.
