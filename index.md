@@ -117,14 +117,16 @@ Code: `X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, 
 ### Cross-validation
 Before we do our final training step, we must perform cross validation. This is because we want to make sure our machine learning model generalizes evenly across the dataset and to see if our model is sensitive to one particular part of the data set.
 
-We split our training data into **5 slices**, and train a model on 4 out of those 5 slices, with the last slice being the testing set. In subsequent iterations, we make the other slices the test sets and continue till all slices have been used as a test set. The result of the cross validation gives us the root mean squared error (RMSE) of predicting on the test sets.
+We split our training data into **5 slices**, and train a model on 4 out of those 5 slices, with the last slice being the testing set. In subsequent iterations, we make the other slices the test sets and continue till all slices have been used as a test set. The result of the cross validation gives us the root mean squared error of predicting on the test sets. We obtain 5 values, and if those 5 values are similar, then our model is stable and capable of generalizing across the whole dataset.  In running our cross-validation, we get the following results.
 
-We obtain 5 values:
-* Fold 1: 2.18462729
-* Fold 2: 2.37527418
-* Fold 3: 2.51594305
-* Fold 4: 2.6624608
-* Fold 5: 3.18173933
+<iframe
+    src="RMSE_Scores.html"
+    width="100%"
+    height="600"
+    frameborder="0">
+</iframe>
+
+
 
 While there seems to be an increase in the RMSE per fold, they are not vastly different giving an average RMSE of **2.58**. This confirms that our XGBoost model is capable of generalizing throughout the whole dataset and we can thus move on to training our model.
 
@@ -134,8 +136,25 @@ We can thus leave our training split as is and train the final model on the data
 ### Model Error
 After training, we can check our prediction accuracy for the training dataset and the test data set by creating a plot of our predicted values and comparing them to the actual values.
 
-* **Training Error:** For scores below 80 points, the points follow the prediction line nicely with a low prediction error. However past the 80 points mark, we see points reside far under the prediction line. This indicates that there is some negative bias our model has with high exam scorers as it tends to under predict them. This could be due to our XGBoost model optimizing against overfitting by deprioritizing extreme values.
-* **Test Error:** Majority of the points seem to lie within the prediction line, however, we can see the underprediction being noticeable past the 80 point mark, which is expected as the same behaviour is observed in our training set.
+* **Training Error:**
+<iframe
+    src="Actual_Predicted_Scores.html"
+    width="100%"
+    height="600"
+    frameborder="0">
+</iframe>
+
+This plot shows a graph of the Predicted Exam Score and the Actual Exam Score. The graph has a dashed prediction line, and the closer the pointers are to the prediction line, the more accurate the prediction is. We can see that for scores below 80 points, the points follow the prediction line nicely with a low prediction error. However past the 80 points mark, we see points reside far under the prediction line. This indicates that there is some negative bias our model has with high exam scorers as it tends to under predict them. This could be due to the our XGBoost model optimizing against overfitting by deprioritizing extreme values. We do not see this bias in lower scores, because the lowest score is around 55 points which is far from the possible low of 0 points. Though we do see a slight over prediction, it is not as stark compared to the higher exam scores.
+
+* **Test Error:***
+<iframe
+    src="Actual_Predicted_Scores_Test.html"
+    width="100%"
+    height="600"
+    frameborder="0">
+</iframe>
+
+  Majority of the points seem to lie within the prediction line, however, we can see the underprediction being noticeable past the 80 point mark, which is expected as the same behaviour is observed in our training set.
 
 I was curious to see how many of the data points have more than a **5-point error**. The output of the result gives us **11** (7 of those where high scores), which is **~0.94%** of our data points in the test set. Our model thus is capable of predicting the majority of scores less than 80 points but fails to predict students who excel.
 
@@ -143,6 +162,14 @@ I was curious to see how many of the data points have more than a **5-point erro
 Now that we have our fully trained model, we can start to analyze which factors the model places more emphasis on. **Feature importance** measures how useful a feature is for prediction. It doesn’t necessarily show correlation.
 
 ### Evaluating Feature Importance
+
+<iframe
+    src="Feature-Importance.html"
+    width="100%"
+    height="600"
+    frameborder="0">
+</iframe>
+
 From the graph of feature importance, we can see that two factors out of all of them dominate our dataset:
 1.  **Attendance:** 42.5%
 2.  **Hours_Studied:** 26.8%
